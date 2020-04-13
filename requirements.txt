@@ -6,7 +6,7 @@ Jinja2
 requests
 SQLAlchemy
 urllib3
-Werkzeug
+Werkzeug==0.15
 #### Heroku
 psycopg2
 gunicorn

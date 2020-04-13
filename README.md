@@ -1,11 +1,11 @@
-# CS50W Project 1 By Mahdi Salem
+# CS50W Project 1
 
 ## Web Programming with Python and JavaScript
 ### https://courses.edx.org/courses/course-v1:HarvardX+CS50W+Web/course/
 
 ## Use the app on Heroku
 
-### https://cs50-prj01.herokuapp.com/
+### https://cs50w-prj01.herokuapp.com/
 
 Login
 ![](https://i.imgur.com/Ra2FRdh.png)
