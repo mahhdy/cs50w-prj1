@@ -1,0 +1,102 @@
+{% extends "layout.html" %}
+{% block styles %}
+<link href="../static/star-rating-svg.css" media="all" rel="stylesheet" type="text/css" />
+<script src="../static/jquery.star-rating-svg.js" type="text/javascript"></script>
+{% endblock %}
+{% block title %}
+{{bookInfo['title']}}
+{% endblock %}
+
+{% block content %}
+<div class="row book-container">
+  <div class="col-sm-4">
+    <div class='row'>
+      <div class='col-12'>
+        <img src="http://covers.openlibrary.org/b/isbn/{{bookInfo['isbn']}}-M.jpg" width="130px">
+      </div>
+      <div class='col-12'>
+        <small>Rate and Review</small>
+      </div>
+      <div class='col-12'>
+        <div id='revSubmit' class="my-rating"></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <h3>{{bookInfo['title']}}</h3>
+    <h5>Author: <strong>{{bookInfo['author']}}</strong> </h5>
+    <h5>Published: <strong>{{bookInfo['year']}}</strong></h5>
+    <h5>ISBN-10: <strong>{{bookInfo['isbn']}}</strong></h5>
+  </div>
+  <div id='myModal' class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form method='POST' class="form-inline">
+            <input class="form-control" type='number' hidden name='rate' >
+            <textarea class="form-control" name="comment" placeholder="Your find this book ...."></textarea>
+            <button type='submit' class='btn btn-primary btn-sm'>submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <img class="mb-3" src="../static/goodreads.svg" alt="Goodreads" width="250" >
+    <h5>Nº of Ratings: {{bookInfo['work_ratings_count']}}</h5>
+    <h5>Average Rating: {{bookInfo['average_rating']}}</h5>
+    <h5>
+      <a href="https://www.goodreads.com/search?q={{bookInfo['isbn']}}" target="_blank">Goodreads page</a>
+    </h5>
+  </div>
+</div>
+<div class="dropdown-divider"></div>
+<div>
+  <div id="userReviews">
+    <h2></h2>
+    {% if reviews is sameas none%}
+    <h4 class='bg-warning text-center'> No Review is submitted yet!</h4>
+    {% else%}
+    {% for review in reviews%}
+    <div class='card'>
+      <div class="card-header pb-1 pt-2">
+        <div class="row justify-content-between">
+          <div class="col-4 text-left">
+            {{review['username']}}
+          </div>
+          <div class="col-4 ">
+            <div class="my-rating text-center" data-rating="{{review['rate']}}" data-readOnly='true' data-activeColor='orange'></div>
+          </div>
+          <div class="col-4 text-right">
+            <small>{{review['add_time'].strftime('%Y-%m-%d %H:%M')}}</small>
+          </div>
+        </div>
+      </div>
+      <div class="card-body pb-1 pt-2">
+        {{review['comment']}}
+      </div>
+    </div>
+    <div class='pb-1'></div>
+    {% endfor %}
+    {% endif%}
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  $(() => {
+    $("#revSubmit").starRating({
+      starSize: 20,
+      initialRating: {{userAVG |default(3.0)}},
+      disableAfterRate: true,
+      useFullStars:true,
+      callback: function (rate, $el) {
+        $('input[type=number]').val(rate);
+        $('#myModal').modal()
+      }
+    });
+    $('.my-rating').starRating({starSize: 20,readOnly:true })
+  });
+</script>
+{% endblock %}

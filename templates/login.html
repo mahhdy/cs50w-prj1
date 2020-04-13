@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block title%}
+    Login
+{% endblock%}
+
+{% block content %}
+  <div class='row justify-content-center'>
+    <div class='col-md-8 col-lg-6'>
+      <div class="card mx-auto text-center">
+          <h3 class="card-header">
+          Log in or <a href="/register">create an account</a>
+          </h3> 
+        <div class="card-body"> 
+          <form action="/login" method="post">
+              <p>{{message}}</p>
+              <div class="form-group">
+                  <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
+              </div>
+              <div class="form-group">
+                  <input class="form-control" name="password" placeholder="Password" type="password"/>
+              </div>
+              <button class="btn btn-primary" type="submit">Log In</button>
+          </form>
+        </div>
+    </div>
+  </div>
+
+
+
+{% endblock %}

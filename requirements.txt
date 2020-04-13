@@ -1,0 +1,12 @@
+Flask
+Flask-Session
+flask_bootstrap
+flask_sqlalchemy
+Jinja2
+requests
+SQLAlchemy
+urllib3
+Werkzeug
+#### Heroku
+psycopg2
+gunicorn

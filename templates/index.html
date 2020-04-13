@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% block styles %}
+{% endblock %}
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<div class="card text-center">
+  <h3 class="card-header">
+    {{searchof|default('')}}
+  </h3>
+  <div class="card-body"> 
+    <form action="/search" method="GET" class="form-inline justify-content-center">
+        <div class="col-auto">
+          <input type="text" class="form-control" name="book" autofocus placeholder="ISBN, Title or Author">
+          <span>
+            <button class="btn btn-primary" type="submit">Search</button>
+          </span>
+        </div>
+    </form>
+    <small class=" d-flex justify-content-center text-muted">Example: 1451648537, Legend or Oscar Wilde</small>
+  </div>
+  <div class="card-footer text-muted" id='flash'>
+    {{totalBook}}
+  </div>
+</div>
+<br>
+
+  {% if error %}
+    <h2 class="text-center bg-danger">{{error}}</h2>
+  {% endif %}  
+  {% if bookList is defined %}
+    <p> Showing first {{bookList|length()}} results. </p>  
+    {% if bookList|length() is eq(0) %}
+      <h4 class="text-center bg-warning"> Your Search of '' {{ query }} '' didn't return any Result! please try again.</h4>
+    {% else %}
+      <div class="card-columns" id='mainList'>
+        {% for t,a,y,i,id in bookList %}
+          <div class="card">
+            <div class='row'>
+              <div class='col-md-12 col-lg-4'>
+                <div class=" d-flex card-body pt-1 pb-1 pr-1 pl-1 justify-content-center ">
+                  <img class ='mt-1 ' src="http://covers.openlibrary.org/b/isbn/{{i}}-M.jpg" alt="{{t}}" style="width:100px;margin:auto;">
+                </div>  
+              </div>
+              <div class='col-md-12 col-lg-8'>
+                <div class="card-body">
+                  <h5 class="card-title" href="/book/{{id}}">{{t}}</h5>
+                  <h6>{{a}}</h6>
+                  <h6>{{y}}</h6>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer text-center pt-1 pb-1">
+              <a class="text-muted" href="/book/{{id}}">Book Details</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}   
+  {% endif %}     
+{% endblock %}
+{% block scripts %}
+
+{% endblock %}
